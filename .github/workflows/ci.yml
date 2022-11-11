@@ -30,3 +30,7 @@ jobs:
         if: github.event_name == 'push'
         run: terraform plan -no-color
         working-directory: "."
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: "."
