@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+env:
+  AWS_REGION: "us-east-1"
+  AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
 
 jobs:
   inform_about_apply:
