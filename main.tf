@@ -28,9 +28,17 @@
 #  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 #  role       = aws_iam_role.github_action_role.name
 #}
+terraform {
+  cloud {
+    organization = "duleendra"
 
+    workspaces {
+      name = "gh-actions-demo"
+    }
+  }
+}
 
 
 resource "aws_s3_bucket" "test_s3_bucket2" {
-  bucket = "duleendra-test-bucket-336"
+  bucket = "duleendra-test-bucket-4444"
 }
