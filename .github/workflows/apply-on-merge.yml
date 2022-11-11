@@ -27,6 +27,9 @@ jobs:
     env:
       TF_VAR_allowed_account_id: ${{ secrets.AWS_ACCOUNT }}
     runs-on: ubuntu-20.04
+    permissions:
+      id-token: write
+      contents: read
     strategy:
       fail-fast: false
       matrix:
