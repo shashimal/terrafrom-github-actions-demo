@@ -20,7 +20,10 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::793209430381:role/GithubActonTFRole
           aws-region: us-east-1
-      - name: Copy files to the test website with the AWS CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Terraform Init
+        id: init
         run: |
           rm -rf .terraform
           terraform init
