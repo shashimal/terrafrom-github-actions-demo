@@ -4,9 +4,12 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+env:
+  AWS_REGION: "us-east-1"
+  AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
 jobs:
   deploy:
-    name: Upload to Amazon S3
+    name: Terraform deployment using Github actions
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -14,16 +17,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-#      - name: Configure AWS credentials from Test account
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          role-to-assume: arn:aws:iam::00000:role/GithubActonTFRole
-#          aws-region: us-east-1
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          # terraform_version: 0.13.0
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          role-to-assume: arn:aws:iam::$AWS_ACCOUNT:role/GithubWebIdentityRole
+          aws-region: $AWS_REGION
+#      - name: Setup Terraform
+#        uses: hashicorp/setup-terraform@v1
+#        with:
+#          # terraform_version: 0.13.0
+#          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
       - name: Terraform Init
@@ -31,13 +34,13 @@ jobs:
         run: |
           rm -rf .terraform
           terraform init
-        working-directory: "."
+        working-directory: "./env/dev"
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'push'
         run: terraform plan -no-color
-        working-directory: "."
+        working-directory: "./env/dev"
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
-        working-directory: "."
+        working-directory: "./env/dev"
