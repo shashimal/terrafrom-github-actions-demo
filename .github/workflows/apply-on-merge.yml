@@ -91,7 +91,7 @@ jobs:
         if: steps.plan.outcome == 'success' && steps.apply.outcome == 'success'
         uses: mshick/add-pr-comment@v1
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GIT_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
             Applying **${{ matrix.path }}**:
@@ -105,7 +105,7 @@ jobs:
         if: steps.plan.outcome == 'failure'
         uses: mshick/add-pr-comment@v1
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GIT_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
             Plan failed for **${{ matrix.path }}**:
@@ -116,7 +116,7 @@ jobs:
         if: steps.apply.outcome == 'failure'
         uses: mshick/add-pr-comment@v1
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GIT_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
             Apply failed for **${{ matrix.path }}**:
