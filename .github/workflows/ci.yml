@@ -15,13 +15,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Configure AWS credentials from Test account
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::793209430381:role/GithubActonTFRole
           aws-region: us-east-1
-
       - name: Copy files to the test website with the AWS CLI
         run: |
-          aws s3 sync . s3://dulogging
+          rm -rf .terraform
+          terraform init
+        working-directory: "."
+      - name: Terraform Plan
+        id: plan
+        if: github.event_name == 'push'
+        run: terraform plan -no-color
+        working-directory: "."
