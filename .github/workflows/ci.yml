@@ -8,7 +8,6 @@ jobs:
   deploy:
     name: Upload to Amazon S3
     runs-on: ubuntu-latest
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
       id-token: write
       contents: read
@@ -18,7 +17,7 @@ jobs:
 #      - name: Configure AWS credentials from Test account
 #        uses: aws-actions/configure-aws-credentials@v1
 #        with:
-#          role-to-assume: arn:aws:iam::793209430381:role/GithubActonTFRole
+#          role-to-assume: arn:aws:iam::00000:role/GithubActonTFRole
 #          aws-region: us-east-1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
