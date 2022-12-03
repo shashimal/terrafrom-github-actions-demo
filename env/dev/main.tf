@@ -4,7 +4,8 @@ resource "aws_s3_bucket" "my_new_bucket" {
 }
 
 
-resource "aws_s3_bucket" "my_new_bucket" {
+resource "aws_s3_bucket" "my_new_bucket2" {
 
   bucket = "duleendra-new-bucket-dus0009"
 }
+
